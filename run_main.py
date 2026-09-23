@@ -26,7 +26,9 @@ import uvicorn
 from backend.config import settings
 
 if __name__ == "__main__":
-    print(f"Starting {settings.APP_NAME} on http://{settings.HOST}:{settings.PORT}")
-    print(f"Swagger API Docs: http://localhost:{settings.PORT}/docs")
+    port = int(os.environ.get("PORT", settings.PORT))
+    host = os.environ.get("HOST", settings.HOST)
+    print(f"Starting {settings.APP_NAME} on http://{host}:{port}")
+    print(f"Swagger API Docs: http://localhost:{port}/docs")
     app_target = "backend.main:app" if os.path.exists("backend") else "main:app"
-    uvicorn.run(app_target, host=settings.HOST, port=settings.PORT, reload=False)
+    uvicorn.run(app_target, host=host, port=port, reload=False)

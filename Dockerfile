@@ -4,6 +4,7 @@ FROM python:3.11-slim
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     curl \
+    libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
 # Set up user for Hugging Face Spaces (UID 1000)
@@ -24,10 +25,10 @@ COPY --chown=user:user . .
 # Ensure data directory exists and is writable
 RUN mkdir -p data/uploads data/qdrant
 
-# Hugging Face Spaces listens on port 7860
-ENV PORT=7860
+# Default ports: Render uses 10000, HF Spaces uses 7860, local uses 8001
+ENV PORT=10000
 ENV HOST=0.0.0.0
 
-EXPOSE 7860
+EXPOSE 10000 7860 8001
 
 CMD ["python", "run_main.py"]

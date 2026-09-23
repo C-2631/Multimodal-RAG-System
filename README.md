@@ -1,4 +1,14 @@
-﻿# 🌌 Multimodal RAG System (Retrieval-Augmented Generation)
+---
+title: Multimodal RAG Backend
+emoji: 🌌
+colorFrom: purple
+colorTo: indigo
+sdk: docker
+pinned: false
+app_port: 7860
+---
+
+# 🌌 Multimodal RAG System (Retrieval-Augmented Generation)
 
 An end-to-end, enterprise-grade Multimodal Retrieval-Augmented Generation (RAG) platform that seamlessly retrieves, synthesizes, and visualizes knowledge across **text documents, PDFs, high-resolution images, videos, audio/podcasts, and real-time live web sources**.
 

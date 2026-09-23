@@ -47,8 +47,8 @@ class Settings(BaseSettings):
     # OpenRouter API — PRIMARY provider for text, vision, and audio transcription
     OPENROUTER_API_KEY: Optional[str] = None
     OPENROUTER_BASE_URL: str = "https://openrouter.ai/api/v1"
-    OPENROUTER_MODEL: str = "nex-agi/nex-n2.5-pro:free"
-    OPENROUTER_VISION_MODEL: str = "anthropic/claude-opus-4.8"
+    OPENROUTER_MODEL: str = "nvidia/nemotron-3-ultra-550b-a55b:free"
+    OPENROUTER_VISION_MODEL: str = "nex-agi/nex-n2.5-pro:free"
     OPENROUTER_WHISPER_MODEL: str = "openai/whisper-large-v3"  # For STT via OpenRouter
 
     # OpenAI API
@@ -74,7 +74,7 @@ class Settings(BaseSettings):
     YOUTUBE_API_KEY: Optional[str] = None        # YouTube Data API v3 key (same Google key works)
 
     model_config = SettingsConfigDict(
-        env_file=(".env", "backend/.env", "../.env"),
+        env_file=("backend/.env", ".env", "../.env"),
         env_file_encoding="utf-8",
         extra="ignore"
     )

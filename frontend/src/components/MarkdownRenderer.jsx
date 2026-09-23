@@ -75,7 +75,8 @@ export const MarkdownRenderer = ({ content, className = '' }) => {
       const alt = match[1];
       let src = match[2];
       if (src.startsWith('/')) {
-        src = `http://localhost:8001${src}`;
+        const backendHost = (import.meta.env.VITE_API_URL || 'http://localhost:8001').replace(/\/$/, '');
+        src = `${backendHost}${src}`;
       }
       parts.push(
         <span key={`img-${match.index}`} className="block my-3 rounded-2xl overflow-hidden border border-purple-200 shadow-md max-w-lg bg-slate-900">

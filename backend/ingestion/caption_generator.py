@@ -36,7 +36,7 @@ class CaptionGenerator:
                     base_url=settings.OPENROUTER_BASE_URL,
                     default_headers=self._OR_HEADERS
                 ),
-                settings.OPENROUTER_VISION_MODEL  # e.g. anthropic/claude-opus-4.8
+                settings.OPENROUTER_VISION_MODEL  # e.g. nex-agi/nex-n2.5-pro:free
             )
         return None, None
 

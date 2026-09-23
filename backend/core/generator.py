@@ -23,7 +23,7 @@ class AnswerGenerator:
         Returns: (sync_client, async_client, provider_name, model_name)
         """
         if settings.OPENROUTER_API_KEY:
-            model = settings.OPENROUTER_MODEL or "nvidia/nemotron-3.5-lightning:free"
+            model = settings.OPENROUTER_MODEL or "nvidia/nemotron-3-ultra-550b-a55b:free"
             headers = {
                 "HTTP-Referer": "https://multimodal-rag-system.local",
                 "X-Title": "Multimodal RAG System"
@@ -116,6 +116,10 @@ class AnswerGenerator:
 
         if sync_client:
             try:
+                extra_kwargs = {}
+                if "nemotron" in model.lower() or "reasoning" in model.lower():
+                    extra_kwargs["extra_body"] = {"reasoning": {"enabled": True}}
+
                 response = sync_client.chat.completions.create(
                     model=model,
                     messages=[
@@ -132,7 +136,8 @@ class AnswerGenerator:
                         {"role": "user", "content": prompt}
                     ],
                     temperature=0.2,
-                    max_tokens=1200
+                    max_tokens=1200,
+                    **extra_kwargs
                 )
                 raw_answer = response.choices[0].message.content or ""
                 answer = self._clean_model_output(raw_answer)
@@ -181,6 +186,10 @@ class AnswerGenerator:
 
         if async_client:
             try:
+                extra_kwargs = {}
+                if "nemotron" in model.lower() or "reasoning" in model.lower():
+                    extra_kwargs["extra_body"] = {"reasoning": {"enabled": True}}
+
                 stream = await async_client.chat.completions.create(
                     model=model,
                     messages=[
@@ -198,7 +207,8 @@ class AnswerGenerator:
                     ],
                     temperature=0.2,
                     max_tokens=1200,
-                    stream=True
+                    stream=True,
+                    **extra_kwargs
                 )
                 async for chunk in stream:
                     delta = chunk.choices[0].delta.content if chunk.choices else ""

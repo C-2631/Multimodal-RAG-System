@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { MOCK_SEARCH_RESULTS } from './mockData';
 
+const BACKEND_BASE = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: BACKEND_BASE ? `${BACKEND_BASE}/api` : '/api',
   timeout: 45000,
 });
 
@@ -94,7 +95,8 @@ function formatBackendResults(backendData, fallbackQuery) {
     .map((s, idx) => {
       let finalUrl = s.image_url;
       if (finalUrl && finalUrl.startsWith('/')) {
-        finalUrl = `http://localhost:8001${finalUrl}`;
+        const backendHost = BACKEND_BASE || 'http://localhost:8001';
+        finalUrl = `${backendHost}${finalUrl}`;
       }
       return {
         id: (s.document_id || 'img') + '-img-' + idx,
